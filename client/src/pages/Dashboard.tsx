@@ -82,8 +82,8 @@ const Dashboard: React.FC = () => {
             {/* Battery Section - Essential info at top */}
             <BatteryIndicator />
             
-            {/* Speed Section */}
-            <div className="flex-1 flex flex-col items-center justify-center mt-2 mb-4">
+            {/* Speed Section - ajustado espaçamento */}
+            <div className="flex-1 flex flex-col items-center justify-center mt-1 mb-2">
               {/* Speedometer */}
               <Speedometer maxSpeed={200} />
             </div>

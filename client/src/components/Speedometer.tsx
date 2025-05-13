@@ -17,8 +17,8 @@ const Speedometer: React.FC<SpeedometerProps> = ({ maxSpeed = 200 }) => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     
-    // Set canvas dimensions
-    const size = 260;
+    // Set canvas dimensions - reduzido para dar mais espaço
+    const size = 220;
     canvas.width = size;
     canvas.height = size;
     
@@ -108,13 +108,13 @@ const Speedometer: React.FC<SpeedometerProps> = ({ maxSpeed = 200 }) => {
     <div className="speedometer relative flex justify-center items-center">
       <canvas 
         ref={canvasRef} 
-        className="w-[260px] h-[260px]"
+        className="w-[220px] h-[220px]"
       />
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
         <div className="speed-unit font-medium text-lg text-gray-300 mb-0">
           km/h
         </div>
-        <div className="speed-value font-mono font-bold text-[80px] leading-tight text-white">
+        <div className="speed-value font-mono font-bold text-[70px] leading-tight text-white">
           {Math.round(motorcycleData.speed)}
         </div>
       </div>
@@ -134,8 +134,8 @@ const Speedometer: React.FC<SpeedometerProps> = ({ maxSpeed = 200 }) => {
         </div>
       </div>
       
-      {/* Indicator lights */}
-      <div className="absolute top-6 left-1/2 transform -translate-x-1/2 flex space-x-4">
+      {/* Indicator lights - posição ajustada para mais acima */}
+      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 flex space-x-4">
         {/* Left turn signal */}
         <div className={motorcycleData.leftIndicator ? "text-amber-400 animate-pulse" : "text-gray-700"}>
           <span className="material-icons">arrow_back</span>
