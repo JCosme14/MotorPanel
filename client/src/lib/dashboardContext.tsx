@@ -47,7 +47,8 @@ export const DashboardProvider: React.FC<{ children: ReactNode }> = ({ children 
     error,
     dismissWarning,
     resetTrip,
-    toggleHighBeam
+    toggleHighBeam,
+    toggleDrivingMode
   } = useSimulatedData();
   
   // User settings state
@@ -140,6 +141,7 @@ export const DashboardProvider: React.FC<{ children: ReactNode }> = ({ children 
     dismissWarning,
     resetTrip,
     toggleHighBeam,
+    toggleDrivingMode,
     showSettings,
     showHelp
   };
