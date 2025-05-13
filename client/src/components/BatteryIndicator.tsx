@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDashboard } from '@/lib/dashboardContext';
 
-const FuelIndicator: React.FC = () => {
+const BatteryIndicator: React.FC = () => {
   const { motorcycleData, userSettings } = useDashboard();
   
   // Format range based on user settings
@@ -13,27 +13,27 @@ const FuelIndicator: React.FC = () => {
     return `${Math.round(motorcycleData.fuelRange)} km`;
   };
   
-  // Determine color based on fuel level
-  const getFuelColor = (): string => {
+  // Determine color based on battery level
+  const getBatteryColor = (): string => {
     if (motorcycleData.fuelLevel <= 15) return 'bg-warning';
     if (motorcycleData.fuelLevel <= 30) return 'bg-secondary';
-    return 'bg-secondary';
+    return 'bg-success';
   };
 
   return (
     <div className="bg-lightSurface dark:bg-darkSurface rounded-xl p-4 shadow-md mb-4">
       <div className="flex justify-between items-center mb-2">
         <div className="flex items-center">
-          <span className="material-icons mr-2 text-secondary">local_gas_station</span>
-          <span className="font-medium">Fuel Level</span>
+          <span className="material-icons mr-2 text-secondary">battery_charging_full</span>
+          <span className="font-medium">Battery Level</span>
         </div>
         <span className="font-mono font-bold">{motorcycleData.fuelLevel}%</span>
       </div>
       
-      {/* Fuel progress bar */}
+      {/* Battery progress bar */}
       <div className="progress-bar bg-gray-200 dark:bg-gray-700 mb-3 h-[18px] rounded-[9px] overflow-hidden">
         <div 
-          className={`h-full ${getFuelColor()} transition-all duration-500 ease-out`} 
+          className={`h-full ${getBatteryColor()} transition-all duration-500 ease-out`} 
           style={{ width: `${motorcycleData.fuelLevel}%` }}
         />
       </div>
@@ -46,4 +46,4 @@ const FuelIndicator: React.FC = () => {
   );
 };
 
-export default FuelIndicator;
+export default BatteryIndicator;

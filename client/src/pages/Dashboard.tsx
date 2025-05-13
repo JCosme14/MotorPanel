@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import StatusBar from '@/components/StatusBar';
 import Speedometer from '@/components/Speedometer';
 import InfoCard from '@/components/InfoCard';
-import FuelIndicator from '@/components/FuelIndicator';
+import BatteryIndicator from '@/components/BatteryIndicator';
 import WarningPanel from '@/components/WarningPanel';
 import QuickActions from '@/components/QuickActions';
 import { useDashboard } from '@/lib/dashboardContext';
@@ -107,8 +107,8 @@ const Dashboard: React.FC = () => {
               </div>
             </div>
             
-            {/* Fuel and Range Section */}
-            <FuelIndicator />
+            {/* Battery and Range Section */}
+            <BatteryIndicator />
             
             {/* Warning Section */}
             <WarningPanel />

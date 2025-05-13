@@ -110,11 +110,11 @@ const Speedometer: React.FC<SpeedometerProps> = ({ maxSpeed = 200 }) => {
         className="w-[320px] h-[320px]"
       />
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+        <div className="speed-unit font-medium text-2xl text-gray-600 dark:text-gray-300 mb-2">
+          {speedUnit}
+        </div>
         <div className="speed-value font-mono font-bold text-[80px] leading-tight text-primary">
           {Math.round(displaySpeed)}
-        </div>
-        <div className="speed-unit font-medium text-2xl text-gray-600 dark:text-gray-300">
-          {speedUnit}
         </div>
       </div>
     </div>
