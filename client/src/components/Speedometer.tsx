@@ -6,15 +6,8 @@ interface SpeedometerProps {
 }
 
 const Speedometer: React.FC<SpeedometerProps> = ({ maxSpeed = 200 }) => {
-  const { motorcycleData, userSettings } = useDashboard();
+  const { motorcycleData } = useDashboard();
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  
-  // Convert km/h to mph if needed
-  const displaySpeed = userSettings.speedUnit === 'mph' 
-    ? Math.round(motorcycleData.speed * 0.621371) 
-    : motorcycleData.speed;
-  
-  const speedUnit = userSettings.speedUnit === 'mph' ? 'mph' : 'km/h';
   
   // Draw speedometer on canvas
   useEffect(() => {
@@ -25,7 +18,7 @@ const Speedometer: React.FC<SpeedometerProps> = ({ maxSpeed = 200 }) => {
     if (!ctx) return;
     
     // Set canvas dimensions
-    const size = 240;
+    const size = 260;
     canvas.width = size;
     canvas.height = size;
     
@@ -40,41 +33,41 @@ const Speedometer: React.FC<SpeedometerProps> = ({ maxSpeed = 200 }) => {
     // Draw outer circle
     ctx.beginPath();
     ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
-    ctx.lineWidth = 6;
-    ctx.strokeStyle = '#0066CC';
+    ctx.lineWidth = 4;
+    ctx.strokeStyle = '#2563EB'; // blue-600
     ctx.stroke();
     
     // Draw background circle
     ctx.beginPath();
     ctx.arc(centerX, centerY, radius - 4, 0, 2 * Math.PI);
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+    ctx.fillStyle = 'rgba(17, 24, 39, 0.7)'; // gray-900 with opacity
     ctx.fill();
     
     // Draw speed arc
-    const speedRatio = displaySpeed / maxSpeed;
+    const speedRatio = motorcycleData.speed / maxSpeed;
     const startAngle = Math.PI * 0.75; // Start at 135 degrees
     const endAngle = startAngle + (Math.PI * 1.5 * Math.min(speedRatio, 1)); // Max 270 degrees arc
     
     ctx.beginPath();
-    ctx.arc(centerX, centerY, radius - 10, startAngle, endAngle);
+    ctx.arc(centerX, centerY, radius - 8, startAngle, endAngle);
     ctx.lineCap = 'round';
-    ctx.lineWidth = 12;
+    ctx.lineWidth = 10;
     
     // Create gradient for speed arc
     const gradient = ctx.createLinearGradient(0, 0, size, size);
-    gradient.addColorStop(0, '#0066CC');
-    gradient.addColorStop(0.7, '#0066CC');
-    gradient.addColorStop(1, '#FF9500');
+    gradient.addColorStop(0, '#2563EB'); // blue-600
+    gradient.addColorStop(0.7, '#2563EB'); // blue-600
+    gradient.addColorStop(1, '#F59E0B'); // amber-500
     
     ctx.strokeStyle = gradient;
     ctx.stroke();
     
-    // Draw tick marks
+    // Draw tick marks at 40, 80, 120, 160, 200
     for (let i = 0; i <= maxSpeed; i += 40) {
       const angle = startAngle + (i / maxSpeed) * Math.PI * 1.5;
       
-      const innerRadius = radius - 20;
-      const outerRadius = radius - 5;
+      const innerRadius = radius - 18;
+      const outerRadius = radius - 4;
       
       const startX = centerX + innerRadius * Math.cos(angle);
       const startY = centerY + innerRadius * Math.sin(angle);
@@ -101,32 +94,62 @@ const Speedometer: React.FC<SpeedometerProps> = ({ maxSpeed = 200 }) => {
         ctx.fillText(i.toString(), textX, textY);
       }
     }
-  }, [displaySpeed, maxSpeed]);
+  }, [motorcycleData.speed, maxSpeed]);
+  
+  // Get gear class for styling
+  const getGearClass = () => {
+    const gear = motorcycleData.gear;
+    if (gear >= 5) return "bg-amber-500"; // High gear
+    if (gear >= 3) return "bg-green-500"; // Medium gear
+    return "bg-blue-500"; // Low gear
+  };
   
   return (
-    <div className="speedometer mb-2 relative">
+    <div className="speedometer relative flex justify-center items-center">
       <canvas 
         ref={canvasRef} 
-        className="w-[240px] h-[240px]"
+        className="w-[260px] h-[260px]"
       />
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-        <div className="speed-unit font-medium text-xl text-gray-600 dark:text-gray-300 mb-1">
-          {speedUnit}
+        <div className="speed-unit font-medium text-lg text-gray-300 mb-0">
+          km/h
         </div>
-        <div className="speed-value font-mono font-bold text-[60px] leading-tight text-primary">
-          {Math.round(displaySpeed)}
+        <div className="speed-value font-mono font-bold text-[80px] leading-tight text-white">
+          {Math.round(motorcycleData.speed)}
         </div>
       </div>
       
-      {/* RPM indicator */}
-      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-center bg-black/30 rounded-full px-3 py-1">
-        <div className="font-mono text-xs">RPM</div>
-        <div className="font-mono font-bold text-secondary">{Math.round(motorcycleData.rpm/100)/10}k</div>
+      {/* Indicator Panels */}
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-3/4 flex justify-between items-center">
+        {/* RPM indicator */}
+        <div className="text-center bg-gray-900/80 rounded-md px-3 py-1">
+          <div className="font-mono text-xs text-gray-400">RPM</div>
+          <div className="font-mono font-bold text-blue-400 text-lg">{Math.round(motorcycleData.rpm/100)/10}k</div>
+        </div>
+        
+        {/* Gear indicator */}
+        <div className={`${getGearClass()} text-white rounded-md px-3 py-1 text-center`}>
+          <div className="font-mono text-xs">MARCHA</div>
+          <div className="font-mono font-bold text-lg">{motorcycleData.gear}</div>
+        </div>
       </div>
       
-      {/* Gear indicator */}
-      <div className="absolute top-3 right-3 bg-primary text-white rounded-full w-8 h-8 flex items-center justify-center">
-        <span className="font-bold">{motorcycleData.gear}</span>
+      {/* Indicator lights */}
+      <div className="absolute top-6 left-1/2 transform -translate-x-1/2 flex space-x-4">
+        {/* Left turn signal */}
+        <div className={motorcycleData.leftIndicator ? "text-amber-400 animate-pulse" : "text-gray-700"}>
+          <span className="material-icons">arrow_back</span>
+        </div>
+        
+        {/* High beam */}
+        <div className={motorcycleData.highBeamOn ? "text-blue-400" : "text-gray-700"}>
+          <span className="material-icons">highlight</span>
+        </div>
+        
+        {/* Right turn signal */}
+        <div className={motorcycleData.rightIndicator ? "text-amber-400 animate-pulse" : "text-gray-700"}>
+          <span className="material-icons">arrow_forward</span>
+        </div>
       </div>
     </div>
   );

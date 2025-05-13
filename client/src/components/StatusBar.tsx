@@ -1,24 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useDashboard } from '@/lib/dashboardContext';
 
 const StatusBar: React.FC = () => {
   const { 
     systemStatus, 
-    motorcycleData, 
-    isDarkMode, 
-    toggleDarkMode,
-    userSettings
+    motorcycleData
   } = useDashboard();
   
-  // Format temperature based on user settings
-  const formatTemperature = (tempInC: number): string => {
-    if (userSettings.temperatureUnit === 'fahrenheit') {
-      const tempInF = (tempInC * 9/5) + 32;
-      return `${Math.round(tempInF)}°F`;
-    }
-    return `${Math.round(tempInC)}°C`;
-  };
-
   // Format current time in Portuguese format
   const formatTime = (): string => {
     return new Date().toLocaleTimeString('pt-PT', {
@@ -29,10 +17,10 @@ const StatusBar: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-between items-center mb-2 px-2 py-2 bg-lightSurface dark:bg-darkSurface rounded-lg shadow-sm">
+    <div className="flex justify-between items-center mb-1 px-2 py-1 bg-gray-900 rounded-md">
       <div className="flex items-center space-x-2">
         {/* GPS icon */}
-        <span className={`material-icons text-lg ${systemStatus.gpsConnected ? 'text-success' : 'text-warning'}`}>
+        <span className={`material-icons text-sm ${systemStatus.gpsConnected ? 'text-green-500' : 'text-amber-500'}`}>
           {systemStatus.gpsConnected ? 'gps_fixed' : 'gps_not_fixed'}
         </span>
         
@@ -40,36 +28,21 @@ const StatusBar: React.FC = () => {
         <span className="font-mono text-sm">{formatTime()}</span>
       </div>
       
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
         {/* Temperatura */}
         <div className="flex items-center">
-          <span className="material-icons mr-1 text-sm text-gray-600 dark:text-gray-300">thermostat</span>
-          <span className="font-mono text-sm">{formatTemperature(motorcycleData.temperature)}</span>
+          <span className="material-icons mr-1 text-sm text-gray-300">thermostat</span>
+          <span className="font-mono text-sm">{Math.round(motorcycleData.temperature)}°C</span>
         </div>
 
         {/* Modo de condução */}
-        <div className="flex items-center">
-          <span className={`text-sm font-medium px-2 py-1 rounded-full ${
-            motorcycleData.drivingMode === 'Eco' ? 'bg-success/20 text-success' :
-            motorcycleData.drivingMode === 'Sport' ? 'bg-warning/20 text-warning' :
-            'bg-primary/20 text-primary'
-          }`}>
-            {motorcycleData.drivingMode}
-          </span>
-        </div>
-        
-        {/* Day/Night toggle */}
-        <button 
-          onClick={toggleDarkMode}
-          className="flex items-center justify-center rounded-full p-2 bg-gray-200 dark:bg-gray-700"
-          aria-label={isDarkMode ? "Mudar para modo dia" : "Mudar para modo noite"}
-        >
-          {isDarkMode ? (
-            <span className="material-icons text-gray-100">nightlight</span>
-          ) : (
-            <span className="material-icons text-gray-800">wb_sunny</span>
-          )}
-        </button>
+        <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
+          motorcycleData.drivingMode === 'Eco' ? 'bg-green-500/20 text-green-400' :
+          motorcycleData.drivingMode === 'Sport' ? 'bg-amber-500/20 text-amber-400' :
+          'bg-blue-500/20 text-blue-400'
+        }`}>
+          {motorcycleData.drivingMode}
+        </span>
       </div>
     </div>
   );

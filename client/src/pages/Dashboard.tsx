@@ -70,23 +70,20 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-    <div id="dashboard" className="font-sans transition-theme bg-lightBg text-gray-900 dark:bg-darkBg dark:text-white min-h-screen touch-manipulation">
+    <div id="dashboard" className="font-sans bg-black text-white min-h-screen touch-manipulation">
       <div className="max-w-md mx-auto h-full p-2">
         {/* Status Bar */}
         <StatusBar />
         
-        <div className="h-[calc(100vh-48px)]">
+        <div className="h-[calc(100vh-32px)]">
           {/* Main Dashboard Content */}
           <div className="flex flex-col h-full">
           
-            {/* Indicators Panel - Moved to top */}
-            <IndicatorsPanel />
-            
-            {/* Battery Section - Moved to top */}
+            {/* Battery Section - Essential info at top */}
             <BatteryIndicator />
             
             {/* Speed Section */}
-            <div className="flex-1 flex flex-col items-center justify-center">
+            <div className="flex-1 flex flex-col items-center justify-center mt-2 mb-4">
               {/* Speedometer */}
               <Speedometer maxSpeed={200} />
             </div>

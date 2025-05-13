@@ -2,57 +2,52 @@ import React from 'react';
 import { useDashboard } from '@/lib/dashboardContext';
 
 const BatteryIndicator: React.FC = () => {
-  const { motorcycleData, userSettings } = useDashboard();
-  
-  // Format range based on user settings
-  const formatRange = (): string => {
-    if (userSettings.distanceUnit === 'mi') {
-      const rangeInMiles = Math.round(motorcycleData.fuelRange * 0.621371);
-      return `${rangeInMiles} mi`;
-    }
-    return `${Math.round(motorcycleData.fuelRange)} km`;
-  };
+  const { motorcycleData } = useDashboard();
   
   // Determine color based on battery level
   const getBatteryColor = (): string => {
-    if (motorcycleData.fuelLevel <= 15) return 'bg-destructive';
-    if (motorcycleData.fuelLevel <= 30) return 'bg-warning';
-    return 'bg-success';
+    if (motorcycleData.fuelLevel <= 15) return 'bg-red-500';
+    if (motorcycleData.fuelLevel <= 30) return 'bg-amber-500';
+    return 'bg-green-500';
   };
 
   return (
-    <div className="bg-lightSurface dark:bg-darkSurface rounded-xl p-3 shadow-md mb-2">
+    <div className="bg-gray-900 rounded-md p-2 mb-1">
       <div className="flex justify-between items-center mb-1">
         <div className="flex items-center">
-          <span className="material-icons mr-2 text-secondary">battery_charging_full</span>
-          <span className="font-medium">Bateria</span>
+          <span className="material-icons mr-2 text-blue-400">battery_charging_full</span>
+          <span className="text-sm">Bateria</span>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <div className="flex items-center">
-            <span className="text-sm text-gray-600 dark:text-gray-400 mr-1">Autonomia:</span>
-            <span className="font-mono font-bold">{formatRange()}</span>
+            <span className="text-xs text-gray-400 mr-1">Autonomia:</span>
+            <span className="font-mono font-bold text-sm">{Math.round(motorcycleData.fuelRange)} km</span>
           </div>
-          <span className="font-mono font-bold">{motorcycleData.fuelLevel}%</span>
+          <span className="font-mono font-bold text-sm">{motorcycleData.fuelLevel}%</span>
         </div>
       </div>
       
       {/* Battery progress bar */}
-      <div className="progress-bar bg-gray-200 dark:bg-gray-700 h-[12px] rounded-full overflow-hidden">
+      <div className="progress-bar bg-gray-800 h-[8px] rounded-full overflow-hidden">
         <div 
           className={`h-full ${getBatteryColor()} transition-all duration-500 ease-out`} 
           style={{ width: `${motorcycleData.fuelLevel}%` }}
         />
       </div>
       
-      {/* Power display */}
-      <div className="flex justify-between mt-1">
-        <span className="text-sm text-gray-600 dark:text-gray-400">Potência:</span>
-        <span className={`font-mono font-bold ${motorcycleData.power < 0 ? 'text-success' : 'text-primary'}`}>
-          {motorcycleData.power < 0 ? '' : '+'}{motorcycleData.power} kW
+      {/* Power display with regen indicator */}
+      <div className="flex justify-between items-center mt-1">
+        <div className="flex items-center">
+          <span className="text-xs text-gray-400">Potência:</span>
+        </div>
+        <div className="flex items-center">
           {motorcycleData.regenBraking && (
-            <span className="text-xs ml-1 text-success">REGEN</span>
+            <span className="text-xs px-1 mr-2 bg-green-500/20 text-green-400 rounded">REGEN</span>
           )}
-        </span>
+          <span className={`font-mono font-bold text-sm ${motorcycleData.power < 0 ? 'text-green-400' : 'text-blue-400'}`}>
+            {motorcycleData.power < 0 ? '' : '+'}{motorcycleData.power} kW
+          </span>
+        </div>
       </div>
     </div>
   );
