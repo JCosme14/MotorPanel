@@ -71,48 +71,25 @@ const Dashboard: React.FC = () => {
 
   return (
     <div id="dashboard" className="font-sans transition-theme bg-lightBg text-gray-900 dark:bg-darkBg dark:text-white min-h-screen touch-manipulation">
-      <div className="container mx-auto h-full p-4">
+      <div className="max-w-md mx-auto h-full p-2">
         {/* Status Bar */}
         <StatusBar />
         
-        <div className="grid grid-cols-1 gap-6 h-[calc(100vh-48px)]">
+        <div className="h-[calc(100vh-48px)]">
           {/* Main Dashboard Content */}
-          <div className="flex flex-col h-full overflow-y-auto">
-            {/* Speed and Critical Info Section */}
-            <div className="flex-1 flex flex-col items-center justify-center mb-4">
-              {/* Speedometer */}
-              <Speedometer maxSpeed={200} />
-              
-              {/* Additional Critical Info */}
-              <div className="grid grid-cols-3 gap-4 w-full">
-                {/* Odometer Card */}
-                <InfoCard 
-                  label="TOTAL" 
-                  value={formatDistance(motorcycleData.odometer)}
-                  unit={userSettings.distanceUnit}
-                />
-                
-                {/* Trip Card */}
-                <InfoCard 
-                  label="TRIP" 
-                  value={formatDistance(motorcycleData.tripDistance)}
-                  unit={userSettings.distanceUnit}
-                />
-                
-                {/* Gear Card */}
-                <InfoCard 
-                  label="GEAR" 
-                  value={motorcycleData.gear}
-                  unit="current"
-                />
-              </div>
-            </div>
+          <div className="flex flex-col h-full">
+          
+            {/* Indicators Panel - Moved to top */}
+            <IndicatorsPanel />
             
-            {/* Battery and Range Section */}
+            {/* Battery Section - Moved to top */}
             <BatteryIndicator />
             
-            {/* Indicators Panel Section */}
-            <IndicatorsPanel />
+            {/* Speed Section */}
+            <div className="flex-1 flex flex-col items-center justify-center">
+              {/* Speedometer */}
+              <Speedometer maxSpeed={200} />
+            </div>
             
             {/* Warning Section */}
             <WarningPanel />

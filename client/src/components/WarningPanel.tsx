@@ -27,24 +27,24 @@ const WarningPanel: React.FC = () => {
 
   if (activeWarnings.length === 0) {
     return (
-      <div className="bg-lightSurface dark:bg-darkSurface rounded-xl p-4 shadow-md mb-4">
-        <div className="flex justify-between items-center mb-3">
+      <div className="bg-lightSurface dark:bg-darkSurface rounded-xl p-2 shadow-md mb-2">
+        <div className="flex justify-between items-center">
           <div className="flex items-center">
             <span className="material-icons mr-2 text-success">check_circle</span>
-            <span className="font-medium">System Status</span>
+            <span className="font-medium">Estado do Sistema</span>
           </div>
-          <span className="text-success font-medium">All systems normal</span>
+          <span className="text-success font-medium text-sm">Todos sistemas normais</span>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-lightSurface dark:bg-darkSurface rounded-xl p-4 shadow-md mb-4">
-      <div className="flex justify-between items-center mb-3">
+    <div className="bg-lightSurface dark:bg-darkSurface rounded-xl p-2 shadow-md mb-2">
+      <div className="flex justify-between items-center mb-1">
         <div className="flex items-center">
           <span className="material-icons mr-2 text-warning">warning</span>
-          <span className="font-medium">Warnings</span>
+          <span className="font-medium">Avisos</span>
         </div>
         <span className="bg-warning text-white px-2 py-1 rounded-full text-xs font-medium">
           {activeWarnings.length}
@@ -52,16 +52,16 @@ const WarningPanel: React.FC = () => {
       </div>
       
       {/* Warning List */}
-      <div className="space-y-2">
+      <div className="space-y-1 max-h-20 overflow-y-auto">
         {activeWarnings.map((warning) => (
-          <div key={warning.id} className="flex items-center justify-between py-2 border-b border-gray-200 dark:border-gray-700">
-            <div className="flex items-center">
-              <span className={`material-icons mr-3 ${getSeverityColor(warning.severity)}`}>
+          <div key={warning.id} className="flex items-start justify-between py-1 border-b border-gray-200 dark:border-gray-700">
+            <div className="flex items-start">
+              <span className={`material-icons mt-1 mr-2 ${getSeverityColor(warning.severity)}`}>
                 {getSeverityIcon(warning.severity)}
               </span>
               <div>
-                <div className="font-medium">{warning.title}</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">
+                <div className="font-medium text-sm">{warning.title}</div>
+                <div className="text-xs text-gray-600 dark:text-gray-400">
                   {warning.description}
                 </div>
               </div>
@@ -71,9 +71,9 @@ const WarningPanel: React.FC = () => {
               variant="ghost" 
               size="sm"
               onClick={() => dismissWarning(warning.id)}
-              className="text-xs h-8"
+              className="text-xs h-6 ml-1"
             >
-              Dismiss
+              Ignorar
             </Button>
           </div>
         ))}

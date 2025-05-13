@@ -25,7 +25,7 @@ const Speedometer: React.FC<SpeedometerProps> = ({ maxSpeed = 200 }) => {
     if (!ctx) return;
     
     // Set canvas dimensions
-    const size = 320;
+    const size = 240;
     canvas.width = size;
     canvas.height = size;
     
@@ -40,13 +40,13 @@ const Speedometer: React.FC<SpeedometerProps> = ({ maxSpeed = 200 }) => {
     // Draw outer circle
     ctx.beginPath();
     ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
-    ctx.lineWidth = 8;
+    ctx.lineWidth = 6;
     ctx.strokeStyle = '#0066CC';
     ctx.stroke();
     
     // Draw background circle
     ctx.beginPath();
-    ctx.arc(centerX, centerY, radius - 5, 0, 2 * Math.PI);
+    ctx.arc(centerX, centerY, radius - 4, 0, 2 * Math.PI);
     ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
     ctx.fill();
     
@@ -56,9 +56,9 @@ const Speedometer: React.FC<SpeedometerProps> = ({ maxSpeed = 200 }) => {
     const endAngle = startAngle + (Math.PI * 1.5 * Math.min(speedRatio, 1)); // Max 270 degrees arc
     
     ctx.beginPath();
-    ctx.arc(centerX, centerY, radius - 12, startAngle, endAngle);
+    ctx.arc(centerX, centerY, radius - 10, startAngle, endAngle);
     ctx.lineCap = 'round';
-    ctx.lineWidth = 16;
+    ctx.lineWidth = 12;
     
     // Create gradient for speed arc
     const gradient = ctx.createLinearGradient(0, 0, size, size);
@@ -70,10 +70,10 @@ const Speedometer: React.FC<SpeedometerProps> = ({ maxSpeed = 200 }) => {
     ctx.stroke();
     
     // Draw tick marks
-    for (let i = 0; i <= maxSpeed; i += 20) {
+    for (let i = 0; i <= maxSpeed; i += 40) {
       const angle = startAngle + (i / maxSpeed) * Math.PI * 1.5;
       
-      const innerRadius = i % 40 === 0 ? radius - 25 : radius - 20;
+      const innerRadius = radius - 20;
       const outerRadius = radius - 5;
       
       const startX = centerX + innerRadius * Math.cos(angle);
@@ -84,18 +84,18 @@ const Speedometer: React.FC<SpeedometerProps> = ({ maxSpeed = 200 }) => {
       ctx.beginPath();
       ctx.moveTo(startX, startY);
       ctx.lineTo(endX, endY);
-      ctx.lineWidth = i % 40 === 0 ? 3 : 1.5;
-      ctx.strokeStyle = i % 40 === 0 ? '#FFFFFF' : 'rgba(255,255,255,0.6)';
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = '#FFFFFF';
       ctx.stroke();
       
       // Draw numbers for major ticks
-      if (i % 40 === 0 && i > 0) {
-        const textRadius = radius - 45;
+      if (i > 0) {
+        const textRadius = radius - 35;
         const textX = centerX + textRadius * Math.cos(angle);
         const textY = centerY + textRadius * Math.sin(angle);
         
         ctx.fillStyle = '#FFFFFF';
-        ctx.font = '16px Roboto Mono, monospace';
+        ctx.font = '14px Roboto Mono, monospace';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText(i.toString(), textX, textY);
@@ -104,18 +104,29 @@ const Speedometer: React.FC<SpeedometerProps> = ({ maxSpeed = 200 }) => {
   }, [displaySpeed, maxSpeed]);
   
   return (
-    <div className="speedometer mb-6 relative">
+    <div className="speedometer mb-2 relative">
       <canvas 
         ref={canvasRef} 
-        className="w-[320px] h-[320px]"
+        className="w-[240px] h-[240px]"
       />
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-        <div className="speed-unit font-medium text-2xl text-gray-600 dark:text-gray-300 mb-2">
+        <div className="speed-unit font-medium text-xl text-gray-600 dark:text-gray-300 mb-1">
           {speedUnit}
         </div>
-        <div className="speed-value font-mono font-bold text-[80px] leading-tight text-primary">
+        <div className="speed-value font-mono font-bold text-[60px] leading-tight text-primary">
           {Math.round(displaySpeed)}
         </div>
+      </div>
+      
+      {/* RPM indicator */}
+      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-center bg-black/30 rounded-full px-3 py-1">
+        <div className="font-mono text-xs">RPM</div>
+        <div className="font-mono font-bold text-secondary">{Math.round(motorcycleData.rpm/100)/10}k</div>
+      </div>
+      
+      {/* Gear indicator */}
+      <div className="absolute top-3 right-3 bg-primary text-white rounded-full w-8 h-8 flex items-center justify-center">
+        <span className="font-bold">{motorcycleData.gear}</span>
       </div>
     </div>
   );

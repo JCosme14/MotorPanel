@@ -6,7 +6,6 @@ const QuickActions: React.FC = () => {
     toggleHighBeam, 
     resetTrip, 
     showSettings, 
-    showHelp,
     toggleDrivingMode,
     motorcycleData
   } = useDashboard();
@@ -29,41 +28,41 @@ const QuickActions: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-between">
+    <div className="flex justify-between gap-2 mt-2">
       <button 
-        className="touch-target flex flex-col items-center justify-center bg-lightSurface dark:bg-darkSurface rounded-xl p-4 shadow-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+        className="flex-1 flex flex-col items-center justify-center bg-lightSurface dark:bg-darkSurface rounded-xl p-2 shadow-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
         onClick={toggleHighBeam}
       >
-        <span className={`material-icons text-2xl mb-1 ${motorcycleData.highBeamOn ? 'text-warning' : 'text-primary'}`}>
+        <span className={`material-icons text-xl ${motorcycleData.highBeamOn ? 'text-warning' : 'text-primary'}`}>
           {motorcycleData.highBeamOn ? 'flashlight_on' : 'highlight'}
         </span>
-        <span className="text-xs">High Beam</span>
+        <span className="text-xs mt-1">Luz Alta</span>
       </button>
       
       <button 
-        className="touch-target flex flex-col items-center justify-center bg-lightSurface dark:bg-darkSurface rounded-xl p-4 shadow-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+        className="flex-1 flex flex-col items-center justify-center bg-lightSurface dark:bg-darkSurface rounded-xl p-2 shadow-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
         onClick={toggleDrivingMode}
       >
-        <span className={`material-icons text-2xl mb-1 ${getModeColor()}`}>
+        <span className={`material-icons text-xl ${getModeColor()}`}>
           {getModeIcon()}
         </span>
-        <span className="text-xs">Mode: {motorcycleData.drivingMode}</span>
+        <span className="text-xs mt-1">Modo: {motorcycleData.drivingMode}</span>
       </button>
       
       <button 
-        className="touch-target flex flex-col items-center justify-center bg-lightSurface dark:bg-darkSurface rounded-xl p-4 shadow-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+        className="flex-1 flex flex-col items-center justify-center bg-lightSurface dark:bg-darkSurface rounded-xl p-2 shadow-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
         onClick={resetTrip}
       >
-        <span className="material-icons text-2xl mb-1 text-primary">restart_alt</span>
-        <span className="text-xs">Reset Trip</span>
+        <span className="material-icons text-xl text-primary">restart_alt</span>
+        <span className="text-xs mt-1">Zerar Viagem</span>
       </button>
       
       <button 
-        className="touch-target flex flex-col items-center justify-center bg-lightSurface dark:bg-darkSurface rounded-xl p-4 shadow-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+        className="flex-1 flex flex-col items-center justify-center bg-lightSurface dark:bg-darkSurface rounded-xl p-2 shadow-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
         onClick={showSettings}
       >
-        <span className="material-icons text-2xl mb-1 text-primary">settings</span>
-        <span className="text-xs">Settings</span>
+        <span className="material-icons text-xl text-primary">settings</span>
+        <span className="text-xs mt-1">Configurações</span>
       </button>
     </div>
   );
