@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import StatusBar from '@/components/StatusBar';
 import Speedometer from '@/components/Speedometer';
-import InfoCard from '@/components/InfoCard';
+import GearIndicator from '@/components/GearIndicator';
 import BatteryIndicator from '@/components/BatteryIndicator';
 import WarningPanel from '@/components/WarningPanel';
-import IndicatorsPanel from '@/components/IndicatorsPanel';
 import QuickActions from '@/components/QuickActions';
 import { useDashboard } from '@/lib/dashboardContext';
 
@@ -82,10 +81,18 @@ const Dashboard: React.FC = () => {
             {/* Battery Section - Essential info at top */}
             <BatteryIndicator />
             
-            {/* Speed Section - ajustado espaçamento */}
-            <div className="flex-1 flex flex-col items-center justify-center mt-1 mb-2">
-              {/* Speedometer */}
-              <Speedometer maxSpeed={200} />
+            {/* Dual Speedometer Section */}
+            <div className="flex-1 flex justify-between items-center mt-1 mb-2">
+              {/* Speed Gauge */}
+              <Speedometer maxSpeed={200} type="speed" />
+              
+              {/* Gear Indicator in center */}
+              <div className="flex flex-col items-center justify-center mx-1">
+                <GearIndicator />
+              </div>
+              
+              {/* RPM Gauge */}
+              <Speedometer maxSpeed={200} type="rpm" />
             </div>
             
             {/* Warning Section */}
