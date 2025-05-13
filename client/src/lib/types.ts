@@ -9,6 +9,14 @@ export interface MotorcycleData {
   tripDistance: number;
   fuelRange: number;
   timestamp: string;
+  // New fields
+  drivingMode: "Eco" | "Normal" | "Sport";
+  power: number;
+  leftIndicator: boolean;
+  rightIndicator: boolean;
+  headlightOn: boolean;
+  highBeamOn: boolean;
+  regenBraking: boolean;
 }
 
 export interface Warning {

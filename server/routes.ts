@@ -157,6 +157,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Simple API for simulated motorcycle data
   app.get("/api/motorcycle/data", (_req, res) => {
     // Generate random data for simulation purposes
+    const modes = ["Eco", "Normal", "Sport"];
+    const randomMode = modes[Math.floor(Math.random() * modes.length)];
+    
+    // Random boolean for indicators
+    const leftIndicator = Math.random() > 0.8;
+    const rightIndicator = !leftIndicator && Math.random() > 0.8;
+    const headlightOn = Math.random() > 0.3;
+    const highBeamOn = headlightOn && Math.random() > 0.7;
+    const regenBraking = Math.random() > 0.7;
+    
+    // Power can be negative (regen) or positive (consumption)
+    const power = regenBraking ? 
+      -(Math.floor(Math.random() * 15) + 5) : 
+      Math.floor(Math.random() * 40) + 10;
+      
     const data = {
       speed: Math.floor(Math.random() * 120),
       rpm: Math.floor(Math.random() * 8000) + 1000,
@@ -166,7 +181,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       odometer: 12457 + (Math.random() * 10),
       tripDistance: 234.5 + (Math.random() * 2),
       fuelRange: Math.floor(Math.random() * 50) + 180,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
+      // New fields
+      drivingMode: randomMode,
+      power: power,
+      leftIndicator: leftIndicator,
+      rightIndicator: rightIndicator,
+      headlightOn: headlightOn,
+      highBeamOn: highBeamOn,
+      regenBraking: regenBraking
     };
     
     res.json(data);

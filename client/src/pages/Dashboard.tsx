@@ -4,6 +4,7 @@ import Speedometer from '@/components/Speedometer';
 import InfoCard from '@/components/InfoCard';
 import BatteryIndicator from '@/components/BatteryIndicator';
 import WarningPanel from '@/components/WarningPanel';
+import IndicatorsPanel from '@/components/IndicatorsPanel';
 import QuickActions from '@/components/QuickActions';
 import { useDashboard } from '@/lib/dashboardContext';
 
@@ -109,6 +110,9 @@ const Dashboard: React.FC = () => {
             
             {/* Battery and Range Section */}
             <BatteryIndicator />
+            
+            {/* Indicators Panel Section */}
+            <IndicatorsPanel />
             
             {/* Warning Section */}
             <WarningPanel />

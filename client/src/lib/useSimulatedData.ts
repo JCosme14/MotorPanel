@@ -14,7 +14,15 @@ export const useSimulatedData = () => {
     odometer: 12457,
     tripDistance: 234.5,
     fuelRange: 215,
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
+    // New fields
+    drivingMode: "Normal",
+    power: 0,
+    leftIndicator: false,
+    rightIndicator: false,
+    headlightOn: true,
+    highBeamOn: false,
+    regenBraking: false
   });
   
   const [warnings, setWarnings] = useState<Warning[]>([]);
@@ -76,8 +84,10 @@ export const useSimulatedData = () => {
 
   // Simulate high beam toggle
   const toggleHighBeam = useCallback(() => {
-    console.log('High beam toggled');
-    // This would interact with motorcycle hardware in a real implementation
+    setMotorcycleData(prev => ({
+      ...prev,
+      highBeamOn: !prev.highBeamOn
+    }));
   }, []);
 
   // Initialize data fetching
@@ -94,6 +104,19 @@ export const useSimulatedData = () => {
     return () => clearInterval(intervalId);
   }, [fetchMotorcycleData, fetchWarnings]);
 
+  // Toggle driving mode: Eco -> Normal -> Sport -> Eco
+  const toggleDrivingMode = useCallback(() => {
+    setMotorcycleData(prev => {
+      const modes: Array<"Eco" | "Normal" | "Sport"> = ["Eco", "Normal", "Sport"];
+      const currentIndex = modes.indexOf(prev.drivingMode);
+      const nextIndex = (currentIndex + 1) % modes.length;
+      return {
+        ...prev,
+        drivingMode: modes[nextIndex]
+      };
+    });
+  }, []);
+
   return {
     motorcycleData,
     warnings,
@@ -101,6 +124,7 @@ export const useSimulatedData = () => {
     error,
     dismissWarning,
     resetTrip,
-    toggleHighBeam
+    toggleHighBeam,
+    toggleDrivingMode
   };
 };

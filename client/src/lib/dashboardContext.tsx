@@ -19,6 +19,7 @@ interface DashboardContextProps {
   dismissWarning: (id: number) => Promise<void>;
   resetTrip: () => Promise<void>;
   toggleHighBeam: () => void;
+  toggleDrivingMode: () => void;
   showSettings: () => void;
   showHelp: () => void;
 }
