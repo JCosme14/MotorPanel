@@ -82,7 +82,7 @@ const Dashboard: React.FC = () => {
             <BatteryIndicator />
             
             {/* Dual Speedometer Section */}
-            <div className="flex-1 flex justify-between items-center mt-1 mb-2">
+            <div className="flex-1 flex justify-between items-center my-0">
               {/* Speed Gauge */}
               <Speedometer maxSpeed={200} type="speed" />
               
@@ -95,7 +95,7 @@ const Dashboard: React.FC = () => {
               <Speedometer maxSpeed={200} type="rpm" />
             </div>
             
-            {/* Warning Section */}
+            {/* Warning Section - reduzido espaçamento */}
             <WarningPanel />
             
             {/* Quick Actions */}

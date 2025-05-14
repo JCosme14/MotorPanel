@@ -14,9 +14,9 @@ const GearIndicator: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-full">
-      <div className={`${getGearClass()} text-white rounded-md py-3 px-4 flex flex-col items-center justify-center`}>
-        <div className="text-xs font-medium">MARCHA</div>
-        <div className="text-[42px] font-mono font-bold leading-none mt-1">
+      <div className={`${getGearClass()} text-white rounded-md py-2 px-3 flex flex-col items-center justify-center`}>
+        <div className="text-[10px] font-medium">MARCHA</div>
+        <div className="text-[32px] font-mono font-bold leading-none">
           {motorcycleData.gear}
         </div>
       </div>

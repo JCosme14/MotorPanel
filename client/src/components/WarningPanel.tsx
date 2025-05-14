@@ -17,7 +17,7 @@ const WarningPanel: React.FC = () => {
 
   if (activeWarnings.length === 0) {
     return (
-      <div className="bg-gray-900 rounded-md p-2 mb-1 flex items-center">
+      <div className="bg-gray-900 rounded-md p-1 mb-1 flex items-center">
         <span className="material-icons mr-2 text-green-500">check_circle</span>
         <span className="text-sm text-gray-200">Sistema funcionando normalmente</span>
       </div>
@@ -25,7 +25,7 @@ const WarningPanel: React.FC = () => {
   }
 
   return (
-    <div className="bg-gray-900 rounded-md p-2 mb-1">
+    <div className="bg-gray-900 rounded-md p-1 mb-1">
       <div className="flex justify-between items-center">
         <div className="flex items-center">
           <span className="material-icons mr-2 text-amber-400">warning</span>

@@ -172,10 +172,10 @@ const Speedometer: React.FC<SpeedometerProps> = ({ maxSpeed = 200, type }) => {
         className="w-[160px] h-[160px]"
       />
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-        <div className="speed-unit font-medium text-sm text-gray-300 mb-0">
+        <div className="speed-unit font-medium text-xs text-gray-300 mb-0">
           {getUnit()}
         </div>
-        <div className={`speed-value font-mono font-bold text-[40px] leading-tight ${type === 'rpm' ? 'text-red-400' : 'text-blue-400'}`}>
+        <div className={`speed-value font-mono font-bold text-[32px] leading-tight ${type === 'rpm' ? 'text-red-400' : 'text-blue-400'}`}>
           {getValueDisplay()}
         </div>
       </div>
