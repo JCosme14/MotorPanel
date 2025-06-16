@@ -1,46 +1,71 @@
-// Core dashboard data types
-export interface MotorcycleData {
-  speed: number;
-  rpm: number;
-  gear: number;
-  fuelLevel: number;
-  temperature: number;
-  odometer: number;
-  tripDistance: number;
-  fuelRange: number;
-  timestamp: string;
-  // New fields
-  drivingMode: "Eco" | "Normal" | "Sport";
-  power: number;
-  leftIndicator: boolean;
-  rightIndicator: boolean;
-  headlightOn: boolean;
-  highBeamOn: boolean;
-  regenBraking: boolean;
+// Define the types for the data you're fetching
+interface MotorcycleData {
+  power: number
+  regenBraking: any
+  fuelRange: number
+  speed: number
+  rpm: number
+  fuelLevel: number
+  batteryVoltage: number
+  latitude: number
+  longitude: number
+  altitude: number
+  heading: number
+  throttlePosition: number
+  engineTemperature: number
+  ambientTemperature: number
+  odometer: number
+  tripDistance: number
+  averageSpeed: number
+  currentConsumption: number
+  averageConsumption: number
+  timeRiding: number
+  createdAt: string
 }
 
-export interface Warning {
+interface Warning {
   id: number;
   title: string;
   description: string;
-  severity: "info" | "warning" | "danger";
+  severity: "info" | "danger" | "warning";
   active: boolean;
-  timestamp: Date;
 }
 
-export interface UserSettings {
-  id?: number;
-  userId: string;
-  theme: "light" | "dark";
-  speedUnit: "kmh" | "mph";
-  distanceUnit: "km" | "mi";
-  temperatureUnit: "celsius" | "fahrenheit";
-  lastUpdated?: Date;
+interface SystemStatus {
+  engineRunning: boolean
+  lightsOn: boolean
+  highBeamOn: boolean
+  drivingMode: "eco" | "normal" | "sport"
 }
 
-// Status types
-export interface SystemStatus {
-  gpsConnected: boolean;
-  currentTime: string;
-  batteryLevel: number;
+interface UserSettings {
+  units: "metric" | "imperial"
+  theme: "light" | "dark"
+  // Add other user settings here
 }
+
+// Add the saveDashboardLayout function to the DashboardContextProps interface
+interface DashboardContextProps {
+  // Motorcycle data
+  motorcycleData: MotorcycleData
+  warnings: Warning[]
+  loading: boolean
+  error: string | null
+
+  // System state
+  systemStatus: SystemStatus
+  isDarkMode: boolean
+  userSettings: UserSettings
+
+  // Actions
+  toggleDarkMode: () => void
+  dismissWarning: (id: number) => Promise<void>
+  resetTrip: () => Promise<void>
+  toggleHighBeam: () => void
+  toggleDrivingMode: () => void
+  showSettings: () => void
+  showHelp: () => void
+  saveDashboardLayout: (layouts: any) => Promise<void> // Add this line
+}
+
+export type { MotorcycleData, Warning, SystemStatus, UserSettings, DashboardContextProps }

@@ -46,8 +46,8 @@ export class MemStorage implements IStorage {
 
     // Setup initial warnings
     this.createWarning({
-      title: "Tire Pressure",
-      description: "Front tire pressure low",
+      title: "Pressão de Pneus",
+      description: "Pressão baixa no pneu frontal",
       severity: "warning",
       active: true
     });
@@ -60,7 +60,7 @@ export class MemStorage implements IStorage {
         return settings;
       }
     }
-    
+
     // Return default settings if none found
     const defaultSettings: InsertSettings = {
       userId,
@@ -69,7 +69,7 @@ export class MemStorage implements IStorage {
       distanceUnit: "km",
       temperatureUnit: "celsius"
     };
-    
+
     return this.saveSettings(defaultSettings);
   }
 
@@ -90,7 +90,7 @@ export class MemStorage implements IStorage {
       ...updatedSettings,
       lastUpdated: new Date()
     };
-    
+
     this.settings.set(id, updated);
     return updated;
   }
@@ -111,7 +111,7 @@ export class MemStorage implements IStorage {
   async dismissWarning(id: number): Promise<boolean> {
     const warning = this.warnings.get(id);
     if (!warning) return false;
-    
+
     warning.active = false;
     this.warnings.set(id, warning);
     return true;
@@ -137,12 +137,12 @@ export class MemStorage implements IStorage {
   async endTrip(id: number, endData: Pick<InsertTrip, 'endOdometer' | 'endTime' | 'avgSpeed' | 'maxSpeed' | 'fuelUsed'>): Promise<Trip | undefined> {
     const trip = this.trips.get(id);
     if (!trip) return undefined;
-    
+
     const updatedTrip: Trip = {
       ...trip,
       ...endData
     };
-    
+
     this.trips.set(id, updatedTrip);
     return updatedTrip;
   }
