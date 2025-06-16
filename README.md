@@ -9,19 +9,19 @@ Requisitos:
 Instalar dependências
 No terminal, navegue até a pasta do projeto e execute:
 
-    -npm install
+    npm install
 
 Gerar o build do frontend
 
-    -npm run build
+    npm run build
 
 Sincronizar com Capacitor
 
-    -npx cap sync android
+    npx cap sync android
 
 Abrir no Android Studio
 
-    -npx cap open android
+    npx cap open android
 
 Requisito de Emulador
 
