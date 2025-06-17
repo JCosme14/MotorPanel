@@ -1,3 +1,5 @@
+- Joao Cosme al78351
+
 **Como Abrir o Projeto no Android Studio**
 
 Requisitos:
