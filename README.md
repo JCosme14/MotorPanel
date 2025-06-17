@@ -5,7 +5,6 @@
 Requisitos:
 - Android Studio instalado
 - Node.js e npm instalados
-- Projeto extraído da pasta MotorcycleDashboard.zip
 - Capacitor configurado
 
 Instalar dependências
