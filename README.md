@@ -27,7 +27,8 @@ Abrir no Android Studio
 
 Requisito de Emulador
 
-Para testes adequados, é necessário um dispositivo/emulador com as seguintes especificações:
+Para testes adequados, é necessário criar um dispositivo/emulador customizado com as seguintes especificações:
+- Phone/Tablet
 - Tamanho: 8 polegadas
 - Resolução: 1280 x 800 px
 
